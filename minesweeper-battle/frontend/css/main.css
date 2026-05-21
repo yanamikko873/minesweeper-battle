@@ -1,0 +1,119 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #111827;
+  color: #e5e7eb;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+/* ========== トップページ ========== */
+#top-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 28px;
+  padding: 24px;
+}
+
+#top-screen h1 {
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  color: #f87171;
+  text-shadow: 0 0 24px rgba(248, 113, 113, 0.4);
+  text-align: center;
+}
+
+#daily-info {
+  text-align: center;
+  background: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 10px;
+  padding: 14px 28px;
+  line-height: 1.8;
+}
+
+#daily-info p:first-child { font-size: 0.75rem; color: #9ca3af; letter-spacing: 2px; text-transform: uppercase; }
+#today-date { font-size: 1.15rem; font-weight: 600; color: #f3f4f6; }
+.difficulty-label { font-size: 0.85rem; color: #6ee7b7; }
+
+.menu-section {
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu-section h2 {
+  font-size: 0.72rem;
+  color: #6b7280;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.sub-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+/* ========== 共通ボタン ========== */
+.menu-btn {
+  padding: 12px 20px;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  background: #1f2937;
+  color: #e5e7eb;
+  font-size: 0.95rem;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.15s;
+}
+
+.menu-btn:hover {
+  background: #2d3748;
+  border-color: #4b5563;
+  transform: translateY(-1px);
+}
+
+.menu-btn.primary {
+  background: #dc2626;
+  border-color: #dc2626;
+  color: #fff;
+  font-weight: 600;
+}
+
+.menu-btn.primary:hover {
+  background: #b91c1c;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4);
+}
+
+.menu-btn.small {
+  font-size: 0.82rem;
+  padding: 10px 12px;
+  flex: 1;
+}
+
+.top-footer {
+  font-size: 0.72rem;
+  color: #4b5563;
+}
+
+.icon-btn {
+  background: none;
+  border: 1px solid #374151;
+  border-radius: 6px;
+  color: #e5e7eb;
+  font-size: 1.1rem;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.icon-btn:hover { background: #1f2937; }

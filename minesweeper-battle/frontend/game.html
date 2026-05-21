@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>マインスイーパー - ソロプレイ</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+  <!-- ========== HUD ========== -->
+  <header id="game-header">
+    <button id="btn-home" class="icon-btn" title="ホームへ">🏠</button>
+
+    <select id="difficulty-select" title="難易度">
+      <option value="beginner">初級 9×9</option>
+      <option value="intermediate" selected>中級 16×16</option>
+      <option value="expert">上級 30×16</option>
+    </select>
+
+    <div id="hud-center">
+      <div class="led-display" id="mine-count">000</div>
+      <button id="reset-btn" title="リスタート">🙂</button>
+      <div class="led-display" id="timer-display">000</div>
+    </div>
+  </header>
+
+  <!-- ========== ボード ========== -->
+  <main id="board-area">
+    <canvas id="board-canvas"></canvas>
+
+    <!-- オーバーレイ（クリア / ゲームオーバー） -->
+    <div id="game-overlay" class="hidden">
+      <div id="overlay-box">
+        <p id="overlay-title"></p>
+        <p id="overlay-message"></p>
+        <button id="overlay-retry" class="menu-btn primary">もう一度</button>
+        <button id="overlay-home"  class="menu-btn">ホームへ</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ========== スマホ操作説明 ========== -->
+  <div id="touch-hint">
+    <span>タップ: 開く</span>
+    <span>長押し: 旗</span>
+    <span>ダブルタップ: 一括開放</span>
+  </div>
+
+  <script src="js/board.js"></script>
+  <script src="js/cell.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+/* ========== ゲーム画面レイアウト ========== */
+body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+
+/* ---- ヘッダー ---- */
+#game-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: #1f2937;
+  border-bottom: 1px solid #374151;
+  flex-shrink: 0;
+}
+
+#difficulty-select {
+  background: #111827;
+  color: #e5e7eb;
+  border: 1px solid #374151;
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+#hud-center {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+/* LED風ディスプレイ */
+.led-display {
+  background: #0a0a0a;
+  color: #22c55e;
+  font-family: 'Courier New', 'Consolas', monospace;
+  font-size: 1.4rem;
+  font-weight: bold;
+  letter-spacing: 3px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid #1f2937;
+  min-width: 68px;
+  text-align: center;
+  line-height: 1.3;
+  text-shadow: 0 0 8px #22c55e;
+}
+
+#reset-btn {
+  background: #374151;
+  border: 1px solid #4b5563;
+  border-radius: 8px;
+  font-size: 1.4rem;
+  width: 42px;
+  height: 38px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s, transform 0.1s;
+  line-height: 1;
+}
+
+#reset-btn:hover { background: #4b5563; transform: scale(1.08); }
+#reset-btn:active { transform: scale(0.96); }
+
+/* ---- ボードエリア ---- */
+#board-area {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 12px;
+  position: relative;
+}
+
+#board-canvas {
+  display: block;
+  border: 2px solid #374151;
+  border-radius: 2px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.6);
+  cursor: pointer;
+  /* タッチ操作時の選択防止 */
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+/* ---- オーバーレイ ---- */
+#game-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.80);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(3px);
+}
+
+#game-overlay.hidden { display: none; }
+
+#overlay-box {
+  background: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 14px;
+  padding: 32px 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 240px;
+}
+
+#overlay-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f3f4f6;
+}
+
+#overlay-message {
+  font-size: 0.95rem;
+  color: #9ca3af;
+}
+
+/* ---- スマホ操作ヒント ---- */
+#touch-hint {
+  display: none;
+  gap: 14px;
+  font-size: 0.72rem;
+  color: #6b7280;
+  padding: 6px 12px;
+  background: #1f2937;
+  border-top: 1px solid #374151;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+/* ========== レスポンシブ ========== */
+@media (max-width: 600px) {
+  #game-header { padding: 6px 8px; gap: 6px; }
+
+  #difficulty-select { font-size: 0.75rem; padding: 5px 6px; }
+
+  .led-display {
+    font-size: 1.1rem;
+    min-width: 54px;
+    padding: 3px 7px;
+    letter-spacing: 2px;
+  }
+
+  #reset-btn { font-size: 1.2rem; width: 38px; height: 34px; }
+
+  #board-area {
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 8px;
+  }
+
+  #touch-hint { display: flex; }
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>毎日マインスイーパー対戦</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <div id="top-screen">
+    <h1>💣 毎日マインスイーパー対戦</h1>
+
+    <div id="daily-info">
+      <p>今日のパズル</p>
+      <p id="today-date"></p>
+      <p class="difficulty-label">中級 16×16 ／ 地雷40個</p>
+    </div>
+
+    <section class="menu-section">
+      <h2>ソロプレイ</h2>
+      <button id="btn-solo" class="menu-btn primary">今日のパズル（中級）</button>
+      <div class="sub-buttons">
+        <button id="btn-beginner" class="menu-btn small">初級 9×9</button>
+        <button id="btn-expert"   class="menu-btn small">上級 30×16</button>
+      </div>
+    </section>
+
+    <section class="menu-section">
+      <h2>対戦モード</h2>
+      <button id="btn-private" class="menu-btn">合言葉で対戦</button>
+      <button id="btn-random"  class="menu-btn">ランダム対戦</button>
+    </section>
+
+    <footer class="top-footer">Phase 1 ソロ版</footer>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
