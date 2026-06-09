@@ -16,24 +16,56 @@
       <p class="difficulty-label">中級 16×16 ／ 地雷40個</p>
     </div>
 
+    <!-- ソロプレイ -->
     <section class="menu-section">
       <h2>ソロプレイ</h2>
-      <button id="btn-solo" class="menu-btn primary">今日のパズル（中級）</button>
+      <button id="btn-solo"      class="menu-btn primary">今日のパズル（中級）</button>
       <div class="sub-buttons">
         <button id="btn-beginner" class="menu-btn small">初級 9×9</button>
         <button id="btn-expert"   class="menu-btn small">上級 30×16</button>
       </div>
     </section>
 
+    <!-- 合言葉対戦 -->
     <section class="menu-section">
-      <h2>対戦モード</h2>
-      <button id="btn-private" class="menu-btn">合言葉で対戦</button>
-      <button id="btn-random"  class="menu-btn">ランダム対戦</button>
+      <h2>合言葉で対戦</h2>
+      <div class="input-row">
+        <input id="room-code-input" type="text" placeholder="合言葉 (例: MINE)"
+               maxlength="8" autocomplete="off" spellcheck="false">
+        <button id="btn-join" class="menu-btn small">入室</button>
+      </div>
+      <button id="btn-create" class="menu-btn">部屋を作る</button>
     </section>
 
-    <footer class="top-footer">Phase 1 ソロ版</footer>
+    <!-- ランダム対戦 -->
+    <section class="menu-section">
+      <h2>ランダム対戦</h2>
+      <button id="btn-random" class="menu-btn">ランダム対戦</button>
+    </section>
+
+    <!-- 名前入力モーダル -->
+    <div id="name-modal" class="modal hidden">
+      <div class="modal-box">
+        <p>プレイヤー名を入力</p>
+        <input id="name-input" type="text" placeholder="名前" maxlength="12" value="">
+        <button id="name-ok" class="menu-btn primary">OK</button>
+      </div>
+    </div>
+
+    <!-- ランダム待機モーダル -->
+    <div id="random-modal" class="modal hidden">
+      <div class="modal-box">
+        <p>🔍 対戦相手を探しています...</p>
+        <p id="random-status">待機中</p>
+        <button id="random-cancel" class="menu-btn">キャンセル</button>
+      </div>
+    </div>
+
+    <footer class="top-footer">サーバー経由で http://localhost:3000 で起動</footer>
   </div>
 
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/socket.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

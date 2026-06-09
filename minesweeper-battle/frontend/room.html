@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>待機ルーム - 毎日マインスイーパー対戦</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/room.css">
+</head>
+<body>
+  <div id="room-screen">
+    <header class="room-header">
+      <button id="btn-home" class="icon-btn">🏠</button>
+      <h1>待機ルーム</h1>
+    </header>
+
+    <div class="room-code-block">
+      <p class="label">合言葉</p>
+      <div id="room-code" class="room-code-display">----</div>
+      <button id="copy-btn" class="menu-btn small">📋 コピー</button>
+    </div>
+
+    <div class="room-info">
+      <p id="status-msg">接続中...</p>
+      <p id="countdown" class="countdown hidden"></p>
+    </div>
+
+    <ul id="player-list" class="player-list"></ul>
+
+    <div class="room-actions">
+      <button id="ready-btn"  class="menu-btn primary">準備完了</button>
+      <button id="start-btn"  class="menu-btn" style="display:none">🚀 ゲーム開始</button>
+    </div>
+
+    <p class="hint">友達に合言葉を教えて一緒に遊ぼう！ (最大4人)</p>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/socket.js"></script>
+  <script src="js/room.js"></script>
+  <script>
+    document.getElementById('copy-btn').addEventListener('click', () => {
+      const code = document.getElementById('room-code').textContent;
+      navigator.clipboard.writeText(code).then(() => alert(`合言葉「${code}」をコピーしました`));
+    });
+  </script>
+</body>
+</html>

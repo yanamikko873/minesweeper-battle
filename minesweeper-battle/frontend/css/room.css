@@ -1,0 +1,224 @@
+/* ========== 待機ルーム ========== */
+#room-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.room-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.room-header h1 { font-size: 1.3rem; color: #f3f4f6; }
+
+.room-code-block {
+  text-align: center;
+  background: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 12px;
+  padding: 20px 32px;
+  width: 100%;
+  max-width: 340px;
+}
+
+.room-code-block .label {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.room-code-display {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #22c55e;
+  letter-spacing: 10px;
+  text-shadow: 0 0 12px rgba(34,197,94,0.4);
+  font-family: 'Courier New', monospace;
+  margin-bottom: 12px;
+}
+
+.room-info {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+
+.countdown {
+  font-size: 1.2rem;
+  color: #f87171;
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+/* プレイヤーリスト */
+.player-list {
+  list-style: none;
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.player-item {
+  background: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  color: #e5e7eb;
+  transition: border-color 0.2s;
+}
+
+.player-item.me {
+  border-color: #22c55e;
+  color: #22c55e;
+}
+
+.room-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 340px;
+}
+
+.hint {
+  font-size: 0.75rem;
+  color: #4b5563;
+  text-align: center;
+}
+
+/* ========== マルチ画面の相手ボード ========== */
+#opponents-area {
+  display: flex;
+  gap: 10px;
+  padding: 8px 12px;
+  background: #1a2030;
+  border-bottom: 1px solid #374151;
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+
+.opponent-card {
+  background: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  padding: 8px 12px;
+  min-width: 130px;
+  font-size: 0.8rem;
+}
+
+.opponent-card.cleared    { border-color: #22c55e; }
+.opponent-card.eliminated { border-color: #ef4444; opacity: 0.6; }
+
+.op-name   { font-weight: 600; color: #e5e7eb; margin-bottom: 4px; }
+.op-status { color: #9ca3af; font-size: 0.72rem; margin-bottom: 6px; }
+
+.op-bar-wrap {
+  background: #374151;
+  border-radius: 4px;
+  height: 6px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.op-bar {
+  height: 100%;
+  background: #22c55e;
+  border-radius: 4px;
+  width: 0%;
+  transition: width 0.3s;
+}
+
+.opponent-card.cleared    .op-bar { background: #22c55e; width: 100% !important; }
+.opponent-card.eliminated .op-bar { background: #ef4444; }
+.op-count { color: #6b7280; font-size: 0.68rem; }
+
+/* おじゃま通知 */
+.ojama-notice {
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #7c3aed;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(124,58,237,0.4);
+  transition: opacity 0.5s;
+}
+
+.ojama-notice.fade-out { opacity: 0; }
+
+/* 結果オーバーレイ */
+#result-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  backdrop-filter: blur(4px);
+}
+
+#result-overlay.hidden { display: none; }
+
+.overlay-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 12px;
+  color: #fbbf24;
+}
+
+#ranking-list {
+  list-style: decimal;
+  padding-left: 24px;
+  margin-bottom: 20px;
+  color: #e5e7eb;
+  line-height: 2;
+}
+
+.inline-status {
+  text-align: center;
+  font-size: 1rem;
+  color: #22c55e;
+  margin-top: 8px;
+  min-height: 1.4em;
+}
+
+/* 待機オーバーレイ */
+#status-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#status-overlay.hidden { display: none; }
+
+#status-overlay .overlay-box,
+#result-overlay  .overlay-box {
+  background: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 14px;
+  padding: 28px 36px;
+  text-align: center;
+  min-width: 220px;
+}

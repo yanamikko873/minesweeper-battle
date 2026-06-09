@@ -40,6 +40,7 @@ class Board {
     this.minesPlaced = false;
     this.openedCount = 0;
     this.flaggedCount = 0;
+    this.fakeFlagCount = 0;
   }
 
   _createGrid() {
@@ -51,6 +52,8 @@ class Board {
         isFlagged: false,
         isExploded: false,
         adjacentMines: 0,
+        isFakeFlag: false, // Phase 4: おじゃま偽フラグ
+        isFog: false,      // Phase 4: おじゃま霧（再封鎖）
       }))
     );
   }
@@ -113,7 +116,16 @@ class Board {
     if (!this.minesPlaced) this._placeMines(row, col);
 
     const cell = this.grid[row][col];
-    if (cell.isOpen || cell.isFlagged) return 'ok';
+    // 偽フラグ・旗は左クリックで開けない
+    if (cell.isFlagged || cell.isFakeFlag) return 'ok';
+    // 霧セル: 安全と分かっているので再開放するだけ
+    if (cell.isFog) {
+      cell.isFog = false;
+      cell.isOpen = true;
+      this.openedCount++;
+      return this._checkWin() ? 'win' : 'ok';
+    }
+    if (cell.isOpen) return 'ok';
 
     if (cell.isMine) {
       cell.isOpen = true;
@@ -135,8 +147,9 @@ class Board {
       if (visited.has(key)) continue;
       visited.add(key);
       const cell = this.grid[r][c];
-      if (cell.isOpen || cell.isFlagged || cell.isMine) continue;
+      if (cell.isOpen || cell.isFlagged || cell.isFakeFlag || cell.isMine) continue;
       cell.isOpen = true;
+      cell.isFog = false;
       this.openedCount++;
       if (cell.adjacentMines === 0) {
         for (const n of this._neighbors(r, c)) {
@@ -146,10 +159,16 @@ class Board {
     }
   }
 
-  // 旗を立てる/外す
+  // 旗を立てる/外す（偽フラグは除去のみ）
   toggleFlag(row, col) {
     const cell = this.grid[row][col];
     if (cell.isOpen) return;
+    if (cell.isFakeFlag) {
+      // 偽フラグは除去するだけ（本物の旗は立てない）
+      cell.isFakeFlag = false;
+      this.fakeFlagCount--;
+      return;
+    }
     if (cell.isFlagged) {
       cell.isFlagged = false;
       this.flaggedCount--;
@@ -159,15 +178,16 @@ class Board {
     }
   }
 
-  // チョード: 周囲の旗数 == 数字なら未開放セルを一括開放
+  // チョード: 周囲の旗数（偽旗含む）== 数字なら未開放セルを一括開放
   chord(row, col) {
     const cell = this.grid[row][col];
     if (!cell.isOpen || cell.adjacentMines === 0) return 'ok';
     const neighbors = this._neighbors(row, col);
-    if (neighbors.filter(n => n.isFlagged).length !== cell.adjacentMines) return 'ok';
+    const flagCount = neighbors.filter(n => n.isFlagged || n.isFakeFlag).length;
+    if (flagCount !== cell.adjacentMines) return 'ok';
 
     for (const n of neighbors) {
-      if (!n.isOpen && !n.isFlagged) {
+      if (!n.isOpen && !n.isFlagged && !n.isFakeFlag) {
         const result = this.open(n.row, n.col);
         if (result === 'mine') return 'mine';
         if (result === 'win') return 'win';
@@ -201,6 +221,46 @@ class Board {
   }
 
   get remainingMines() {
-    return this.totalMines - this.flaggedCount;
+    return this.totalMines - this.flaggedCount - this.fakeFlagCount;
+  }
+
+  // ========== Phase 4: おじゃまメソッド ==========
+
+  // 偽フラグを閉じた安全セルにランダム配置
+  addFakeFlag() {
+    const candidates = [];
+    for (let r = 0; r < this.rows; r++) {
+      for (let c = 0; c < this.cols; c++) {
+        const cell = this.grid[r][c];
+        if (!cell.isOpen && !cell.isFlagged && !cell.isFakeFlag && !cell.isMine) {
+          candidates.push(cell);
+        }
+      }
+    }
+    if (candidates.length === 0) return;
+    const target = candidates[Math.floor(Math.random() * candidates.length)];
+    target.isFakeFlag = true;
+    this.fakeFlagCount++;
+  }
+
+  // 霧: 開いているセルをランダムに再封鎖
+  addFog(count = 3) {
+    const candidates = [];
+    for (let r = 0; r < this.rows; r++) {
+      for (let c = 0; c < this.cols; c++) {
+        const cell = this.grid[r][c];
+        if (cell.isOpen && !cell.isMine) candidates.push(cell);
+      }
+    }
+    // shuffle
+    for (let i = candidates.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [candidates[i], candidates[j]] = [candidates[j], candidates[i]];
+    }
+    for (let i = 0; i < Math.min(count, candidates.length); i++) {
+      candidates[i].isOpen = false;
+      candidates[i].isFog = true;
+      this.openedCount--;
+    }
   }
 }

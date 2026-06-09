@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>対戦中 - 毎日マインスイーパー</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/game.css">
+  <link rel="stylesheet" href="css/multi.css">
+</head>
+<body>
+  <!-- HUD -->
+  <header id="game-header">
+    <button id="btn-home" class="icon-btn" title="ホームへ">🏠</button>
+    <div id="hud-center">
+      <div class="led-display" id="mine-count">000</div>
+      <button id="reset-btn" title="ホームへ戻る">🙂</button>
+      <div class="led-display" id="timer-display">000</div>
+    </div>
+  </header>
+
+  <!-- 相手ボード一覧 -->
+  <div id="opponents-area"></div>
+
+  <!-- おじゃま通知 -->
+  <div id="ojama-notice" class="ojama-notice hidden"></div>
+
+  <!-- 自分のボード -->
+  <main id="board-area">
+    <canvas id="board-canvas"></canvas>
+    <p id="inline-status" class="inline-status"></p>
+
+    <!-- 待機オーバーレイ -->
+    <div id="status-overlay" class="hidden">
+      <div class="overlay-box">
+        <p id="status-msg">接続中...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- 結果オーバーレイ -->
+  <div id="result-overlay" class="hidden">
+    <div class="overlay-box">
+      <p class="overlay-title">🏆 結果</p>
+      <ol id="ranking-list"></ol>
+      <button id="result-home" class="menu-btn primary">ホームへ</button>
+    </div>
+  </div>
+
+  <!-- スマホヒント -->
+  <div id="touch-hint">
+    <span>タップ: 開く</span>
+    <span>長押し: 旗</span>
+    <span>ダブルタップ: 一括開放</span>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/board.js"></script>
+  <script src="js/cell.js"></script>
+  <script src="js/ojama.js"></script>
+  <script src="js/socket.js"></script>
+  <script src="js/multi.js"></script>
+</body>
+</html>

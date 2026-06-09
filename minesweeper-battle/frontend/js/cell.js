@@ -49,8 +49,13 @@ function drawCell(ctx, cell, x, y, size, gameState) {
     ctx.fillRect(x, y + size - 2, size, 2);
     ctx.fillRect(x + size - 2, y, 2, size);
 
-    if (cell.isFlagged) {
-      drawFlag(ctx, x + size / 2, y + size / 2, size * 0.3);
+    if (cell.isFlagged || cell.isFakeFlag) {
+      // 偽フラグは見た目を本物と同じにして惑わす（色だけ微妙に違う）
+      drawFlag(ctx, x + size / 2, y + size / 2, size * 0.3, cell.isFakeFlag);
+    } else if (cell.isFog) {
+      // 霧: 薄い青で封鎖感を演出
+      ctx.fillStyle = 'rgba(100,150,255,0.18)';
+      ctx.fillRect(x + 3, y + 3, size - 6, size - 6);
     } else if (isLost && cell.isMine) {
       // ゲームオーバー時に地雷を薄く表示
       ctx.globalAlpha = 0.55;
@@ -101,8 +106,8 @@ function drawMine(ctx, cx, cy, r, exploded) {
   ctx.fill();
 }
 
-// 旗アイコン描画
-function drawFlag(ctx, cx, cy, r) {
+// 旗アイコン描画（isFake=true のとき偽旗: オレンジ色）
+function drawFlag(ctx, cx, cy, r, isFake = false) {
   // ポール
   ctx.strokeStyle = '#dddddd';
   ctx.lineWidth = Math.max(1.5, r * 0.22);
@@ -111,8 +116,8 @@ function drawFlag(ctx, cx, cy, r) {
   ctx.lineTo(cx, cy - r);
   ctx.stroke();
 
-  // 旗（三角形）
-  ctx.fillStyle = '#ff3333';
+  // 旗（三角形）: 偽フラグはオレンジ色で本物と区別しにくくする
+  ctx.fillStyle = isFake ? '#ff8800' : '#ff3333';
   ctx.beginPath();
   ctx.moveTo(cx, cy - r);
   ctx.lineTo(cx + r * 1.3, cy - r * 0.35);
